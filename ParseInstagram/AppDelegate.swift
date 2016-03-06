@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        // Initialize Parse
+        // Set applicationId and server based on the values in the Heroku settings.
+        // clientKey is not used on Parse open source unless explicitly configured
+        Parse.initializeWithConfiguration(
+            ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = "myAppId"
+                configuration.clientKey = "asdfasdfweri9weru91823uy409eiruhja;klsdfj;lzkxjf"
+                configuration.server = "https://parseinstagramclone.herokuapp.com/parse"
+            })
+        )
+        
+        if PFUser.currentUser() != nil {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginController = mainStoryboard.instantiateViewControllerWithIdentifier("tabBarController")
+            self.window?.rootViewController = loginController
+        }
         return true
     }
 

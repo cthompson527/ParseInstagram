@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class LogoffViewController: UIViewController {
 
@@ -21,6 +22,16 @@ class LogoffViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onLogoffButton(sender: AnyObject) {
+        PFUser.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("logged out")
+                self.performSegueWithIdentifier("logoffSegue", sender: nil)
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation
